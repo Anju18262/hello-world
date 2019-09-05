@@ -1,90 +1,109 @@
-# Welcome to GitHub
+# Nightwatch.js End-to-End Browser Automation
 
-Welcome to GitHub—where millions of developers work together on software. Ready to get started? Let’s learn how this all works by building and publishing your first GitHub Pages website!
+[Nightwatch](http://nightwatchjs.org/) is an automated testing framework for web applications and websites, written in [Node.js](https://nodejs.org/en/) and using the [W3C WebDriver API](https://www.w3.org/TR/webdriver/) (formerly [Selenium WebDriver](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)) to perform browser automation related tasks, like opening windows and clicking links for instance.
 
-## Repositories
+WebDriver is now a W3C specification, which aims to standardize browser automation. WebDriver is a remote control interface that enables introspection and control of user agents. It provides a platform and a restful HTTP API as a way for web browsers to be remotely controlled.
 
-Right now, we’re in your first GitHub **repository**. A repository is like a folder or storage space for your project. Your project's repository contains all its files such as code, documentation, images, and more. It also tracks every change that you—or your collaborators—make to each file, so you can always go back to previous versions of your project if you make any mistakes.
+## 1. Getting Started
 
-This repository contains three important files: The HTML code for your first website on GitHub, the CSS stylesheet that decorates your website with colors and fonts, and the **README** file. It also contains an image folder, with one image file.
+This document assumes you've already cloned the infusionsoft-core-automation repo, and ran a `yarn` or `yarn install` to download all necessary dependencies.
 
-## Describe your project
+If you are running into an 'Unauthorized' error when running `yarn` or `yarn install` it is likely you need to complete your authetication with JFrog.
 
-You are currently viewing your project's **README** file. **_README_** files are like cover pages or elevator pitches for your project. They are written in plain text or [Markdown language](https://guides.github.com/features/mastering-markdown/), and usually include a paragraph describing the project, directions on how to use it, who authored it, and more.
+**This only needs to be done once.**
 
-[Learn more about READMEs](https://help.github.com/en/articles/about-readmes)
-
-## Your first website
-
-**GitHub Pages** is a free and easy way to create a website using the code that lives in your GitHub repositories. You can use GitHub Pages to build a portfolio of your work, create a personal website, or share a fun project that you coded with the world. GitHub Pages is automatically enabled in this repository, but when you create new repositories in the future, the steps to launch a GitHub Pages website will be slightly different.
-
-[Learn more about GitHub Pages](https://pages.github.com/)
-
-## Rename this repository to publish your site
-
-We've already set-up a GitHub Pages website for you, based on your personal username. This repository is called `hello-world`, but you'll rename it to: `username.github.io`, to match your website's URL address. If the first part of the repository doesn’t exactly match your username, it won’t work, so make sure to get it right.
-
-Let's get started! To update this repository’s name, click the `Settings` tab on this page. This will take you to your repository’s settings page. 
-
-![repo-settings-image](https://user-images.githubusercontent.com/18093541/63130482-99e6ad80-bf88-11e9-99a1-d3cf1660b47e.png)
-
-Under the **Repository Name** heading, type: `username.github.io`, where username is your username on GitHub. Then click **Rename**—and that’s it. When you’re done, click your repository name or browser’s back button to return to this page.
-
-<img width="1039" alt="rename_screenshot" src="https://user-images.githubusercontent.com/18093541/63129466-956cc580-bf85-11e9-92d8-b028dd483fa5.png">
-
-Once you click **Rename**, your website will automatically be published at: https://your-username.github.io/. The HTML file—called `index.html`—is rendered as the home page and you'll be making changes to this file in the next step.
-
-Congratulations! You just launched your first GitHub Pages website. It's now live to share with the entire world
-
-## Making your first edit
-
-When you make any change to any file in your project, you’re making a **commit**. If you fix a typo, update a filename, or edit your code, you can add it to GitHub as a commit. Your commits represent your project’s entire history—and they’re all saved in your project’s repository.
-
-With each commit, you have the opportunity to write a **commit message**, a short, meaningful comment describing the change you’re making to a file. So you always know exactly what changed, no matter when you return to a commit.
-
-## Practice: Customize your first GitHub website by writing HTML code
-
-Want to edit the site you just published? Let’s practice commits by introducing yourself in your `index.html` file. Don’t worry about getting it right the first time—you can always build on your introduction later.
-
-Let’s start with this template:
+1. Run `npm config set registry https://infusionsoft.jfrog.io/infusionsoft/api/npm/npm/`
+2. Run `npm config set email <KEAP_EMAIL>`
+3. Login to JFrog through Okta
+4. Go to your [profile](https://infusionsoft.jfrog.io/infusionsoft/webapp/#/profile)
+5. Copy your API Key
+6. Run the following with your API key and username (that's just your `firstName.lastName` probably):
+    * ```curl -u <USER_NAME>:<API_KEY> https://infusionsoft.jfrog.io/infusionsoft/api/npm/auth >> ~/.npmrc```
+7. The resulting ~/.npmrc file should look similar to this:
 
 ```
-<p>Hello World! I’m [username]. This is my website!</p>
+registry = https://infusionsoft.jfrog.io/infusionsoft/api/npm/npm/
+email = your.email@keap.com
+_auth = your_auth_token
+always-auth = true
 ```
 
-To add your introduction, copy our template and click the edit pencil icon at the top right hand corner of the `index.html` file.
-
-<img width="997" alt="edit-this-file" src="https://user-images.githubusercontent.com/18093541/63131820-0794d880-bf8d-11e9-8b3d-c096355e9389.png">
-
-
-Delete this placeholder line:
+## 2. Running Tests
 
 ```
-<p>Welcome to your first GitHub Pages website!</p>
+Please note: Nightwatch will automatically take care of spinning up
+the WebDriver for you, as well as tear it down after the run(s) complete.
+No additional configuration for that service should be required.
 ```
 
-Then, paste the template to line 15 and fill in the blanks.
+Running all tests, using the default config is as simple as running the corresponding `nightwatch` command from the root directory of infusionsoft-core-automation. This document provides all commands using the project's version of nightwatch i.e. `node_modules/.bin/nightwatch`:
+``` bash
+# The below command will run all tests using the default configuration,
+# and using the project's version of nightwatch
+npx nightwatch
+```
 
-<img width="1032" alt="edit-githuboctocat-index" src="https://user-images.githubusercontent.com/18093541/63132339-c3a2d300-bf8e-11e9-8222-59c2702f6c42.png">
+If you have the correct version of nightwatch installed globally, then you can run all your commands from the root using just `nightwatch`:
+``` bash
+# The below command will run all tests using the default configuration,
+# using the globally installed version of nightwatch
+nightwatch
+```
 
+Running individual tests is as simple as passing the path (starting from the project root directory) of the test file to the nightwatch runner:
+``` bash
+# The below command will run the LoginTest only
+yarn test src/tests/smoke/LoginTest.e2e.js
 
-When you’re done, scroll down to the `Commit changes` section near the bottom of the edit page. Add a short message explaining your change, like "Add my introduction", then click `Commit changes`.
+# You can run multiple individual tests by passing additional test file paths as
+# additional parameters with a space between them
+npx nightwatch src/tests/smoke/LoginTest.e2e.js src/tests/smoke/SomeOtherTest.e2e.js
 
+# You can run individual tests using the -g (group) flag as well, but keep in mind
+# that means the path(s) will need to start relative to the root of the 'src/tests' folder
+npx nightwatch -g smoke/LoginTest.e2e.js
+npx nightwatch -g regression/SomeRegressionTest.e2e.js
 
-<img width="1030" alt="add-my-username" src="https://user-images.githubusercontent.com/18093541/63131801-efbd5480-bf8c-11e9-9806-89273f027d16.png">
+# To run all tests within a given folder, use the -g (group) flag passing just the path
+# (again relative to the 'src/tests' folder) of the folder you want to run
+npx nightwatch -g smoke
+npx nightwatch -g regression/tasks
+```
 
-Once you click `Commit changes`, your changes will automatically be published on your GitHub Pages website. Refresh the page to see your new changes live in action.
+Additionally, you can use the prebuilt scripts in the package.json to run tests as well:
+``` bash
+# The below command will run all tests using the default configuration
+yarn test
 
-:tada: You just made your first commit! :tada:
+# The below command will run all tests using the CI configuration
+yarn test:ci
+```
 
-## Extra Credit: Keep on building!
+## 3. Adding or Updating Tests
 
-Change the placeholder Octocat gif on your GitHub Pages website by [creating your own personal Octocat emoji](https://myoctocat.com/build-your-octocat/) or [choose a different Octocat gif from our logo library here](https://octodex.github.com/). Add that image to line 12 of your `index.html` file, in place of the `<img src=` link.
+If you would like to add or update any tests, please follow our e2e guidelines for Nightwatch located here: [End-To-End Testing with Nightwatch.js](https://github.com/infusionsoft/engineering-handbook/blob/master/coding-guidelines/front-end-web/e2e-testing-with-nightwatch.md)
 
-Want to add even more code and fun styles to your GitHub Pages website? [Follow these instructions](https://github.com/github/personal-website) to build a fully-fledged static website.
+## 4. Advanced Info & Commands
 
-![octocat](./images/create-octocat.png)
+### Nightwatch Configuration
 
-## Everything you need to know about GitHub
+The test runner expects a configuration file to be passed, using (by default) a `nightwatch.json` file from the current directory, if present. A `nightwatch.conf.js` file will also be loaded by default, if found. Using both configuration files is also possible, with `nightwatch.conf.js` always taking precedence if both are found.
 
-Getting started is the hardest part. If there’s anything you’d like to know as you get started with GitHub, try searching [GitHub Help](https://help.github.com). Our documentation has tutorials on everything from changing your repository settings to configuring GitHub from your command line.
+```
+Default configuration is the nightwatch.json file in the project root directory.
+```
+
+CircleCI requires some additional & separate configuration so we use an additional config file for that:
+
+```
+CircleCI configuration is the nightwatch.ci.js file in the project root directory.
+```
+
+### Global Installation of Nightwatch
+
+In order to be able to run nightwatch commands from any directory, install nightwatch 'globally' using the following command:
+
+``` bash
+# This command installs nightwatch 'globally' so the nightwatch commands can be ran from any directory.
+npm install -g nightwatch
+```
